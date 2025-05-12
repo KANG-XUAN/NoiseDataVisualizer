@@ -1,0 +1,99 @@
+<!--
+https://data.gov.tw/dataset/101813
+臺南市噪音監測站監測數據
+本資料集提供臺南市噪音監測站監測數據資料。
+
+用表格呈現
+
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function () {              // load 網頁資料下載後結束後會執行
+			$("#button1").on("click", function () {
+				let url = "https://soa.tainan.gov.tw/Api/Service/Get/c907df5c-d78b-4aa1-b5d4-f44fa712ab8e";
+				$.get(url, function (data, status) {
+					// 網址內容轉文字
+					let jsonStr = JSON.stringify(data);
+					// 文字內容轉物件
+					let json = JSON.parse(jsonStr);
+					console.log(json);
+
+
+					$("tbody").empty();
+					for (let i = 0; i < json.data.length; i++) {
+						// 抓取資料
+						let Seq = json.data[i]["Seq"];
+						let nightLevel = json.data[i]["夜"];
+						let nightStandard = json.data[i]["夜間標準值"];
+						let dayLevel = json.data[i]["日"];
+						let dayStandard = json.data[i]["日間標準值"];
+						let eveningLevel = json.data[i]["晚"];
+						let eveningStandard = json.data[i]["早晚標準值"];
+						let stationId = json.data[i]["測站編號"];
+						let stationName = json.data[i]["測站名稱"];
+						let monitorDate = json.data[i]["監測日期"];
+						let controlZone = json.data[i]["管制區"];
+						let noiseSource = json.data[i]["音源別"];
+
+						let html = `
+					<tr>
+						<td>${Seq}</td>
+						<td>${nightLevel}</td>
+						<td>${nightStandard}</td>
+						<td>${dayLevel}</td>
+						<td>${dayStandard}</td>
+						<td>${eveningLevel}</td>
+						<td>${eveningStandard}</td>
+						<td>${stationId}</td>
+						<td>${stationName}</td>
+						<td>${monitorDate}</td>
+						<td>${controlZone}</td>
+						<td>${noiseSource}</td>
+					</tr>
+					`;
+
+						$("tbody").append(html)
+					}
+
+
+
+					console.log(json.data.length)
+				})
+			})
+		});
+	</script>
+</head>
+
+<body>
+
+	<button class="btn btn-primary w-100 m-3 " id="button1">擷取資料</button>
+
+	<table class="table table-hover text-center small">
+		<thead>
+			<th>Seq</th>
+			<th>夜</th>
+			<th>夜間標準值</th>
+			<th>日</th>
+			<th>日間標準值</th>
+			<th>晚</th>
+			<th>早晚標準值</th>
+			<th>測站編號</th>
+			<th>測站名稱</th>
+			<th>監測日期</th>
+			<th>管制區</th>
+			<th>音源別</th>
+		</thead>
+		<tbody>
+
+		</tbody>
+	</table>
+
+</body>
+
+</html>
