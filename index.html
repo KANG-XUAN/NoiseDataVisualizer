@@ -21,6 +21,7 @@ https://data.gov.tw/dataset/101813
 				// 將原始請求網址 url1 加上 CORS 代理伺服器的前綴，
 				// 透過 https://cors-anywhere.herokuapp.com/ 幫忙繞過瀏覽器的跨域限制，
 				// 使得可以從前端網頁直接存取不支援 CORS 的 API。
+				// let urlCORS = "https://cors-anywhere.herokuapp.com/" + url;
 				$.get(url, function (data, status) {
 					// 網址內容轉文字
 					let jsonStr = JSON.stringify(data);
